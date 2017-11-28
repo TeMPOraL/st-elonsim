@@ -5,7 +5,9 @@
   :author "Jacek \"TeMPOraL\" Złydach <temporal.pl@gmail.com>"
   :license "MIT"
   :depends-on (#:clack
-               #:lass)
+               #:spinneret
+               #:lass
+               #:parenscript)
   :serial t
   :components ((:file "package")
                (:file "main")))
