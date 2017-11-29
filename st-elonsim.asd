@@ -10,5 +10,10 @@
                #:parenscript)
   :serial t
   :components ((:file "package")
+
+               (:module "game"
+                        :components ((:file "core")
+                                     (:file "interface")))
+
                (:file "main")))
 

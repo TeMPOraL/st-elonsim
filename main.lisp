@@ -9,10 +9,33 @@
 
 
 (defun main-handler (env)
-  `(200 nil (,(with-output-to-string (str)
-                (princ "<pre>" str)
-                (prin1 env str)
-                (princ "</pre>" str)))))
+  ;; TODO better routing
+  (let ((path (getf env :path-info)))
+    (cond
+      ;; index
+      ((or (string= path "/")
+           (string= path "/index.html"))
+       `(200
+         (:content-type "text/html; charset=utf-8")
+         (,(generate-game-html))))
+
+      ;; CSS
+      ((string= path "/interface.css")
+       `(200
+         (:content-type "text/css")
+         (,(generate-interface-css))))
+
+      ;; main JS
+      ((string= path "/core.js")
+       `(200
+         (:content-type "application/javascript")
+         (,(generate-core-js))))
+
+      ;; catch-all
+      (t
+       `(404
+         (:content-type "text/plain")
+         ("Go away."))))))
 
 
 

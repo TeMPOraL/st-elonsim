@@ -1,7 +1,7 @@
 ;;;; package.lisp
 
 (defpackage #:st-elonsim
-  (:use #:cl)
+  (:use #:cl #:ps)
 
   (:export #:start
            #:stop))
