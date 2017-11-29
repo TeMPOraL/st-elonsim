@@ -4,7 +4,7 @@
 
 
 
-(defparameter *server* "Server instance.")
+(defparameter *server* nil "Server instance.")
 
 
 
