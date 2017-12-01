@@ -4,6 +4,12 @@
 
 ;;; TODO figure out if there's a nice way to insert comments into PS output.
 
+(defparameter *timewarp-modes-alist* `((:pause . ("||" 0))
+                                       (:normal . (">" 1))
+                                       (:fast . (">>" 60))
+                                       (:faster . (">>>" ,(expt 60 2)))
+                                       (:fastest . (">>>>" ,(expt 60 3)))))
+
 (defun generate-core-js ()
   (ps
 
@@ -14,17 +20,25 @@
       `(when *debug*
          (console.log ,@what)))
 
+    ;; UI constants
+    (defvar *timewarp-modes*
+      (lisp (cons 'create
+                  (mapcan (lambda (el)
+                            `(,(car el)
+                               (create 'dom-name ,(concatenate 'string "btn-timewarp-" (string-downcase (car el)))
+                                       'step ,(caddr el)))) st-elonsim::*timewarp-modes-alist*))))
+
     ;; state
 
     (var *current-time* (new (-Date (chain -Date (-U-T-C 2018 0 1 0 0 0))))) ;NOTE starting date
     (var *seconds-per-tick* 1)
 
     (var *humans-in-space-current* 0)
-    (var *humans-in-space-top* 13)      ;FIXME I think that's the record
+    (var *humans-in-space-top* 13)    ;FIXME I think that's the record
     (var *human-distance-in-space-current* 0) ;FIXME determine
-    (var *human-distance-in-space-top* 0)  ;FIXME determine
+    (var *human-distance-in-space-top* 0)     ;FIXME determine
 
-    (var *money* 1e9)                     ;starting money FIXME some sane amount
+    (var *money* 1e9)           ;starting money FIXME some sane amount
 
     ;; TODO save to local storage
     (defun save-game ()
@@ -34,6 +48,10 @@
     ;; TODO load from local storage
     (defun load-game ()
       ;; TODO
+      )
+
+    (defun select-timewarp (mode)
+      ;; TODO use *timewarp-modes*
       )
 
     ;; Utilities

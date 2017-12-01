@@ -27,7 +27,14 @@
                   (:div :id "current-time-box"
                         (:span :id "val-current-time" "2017-11-29 20:00:00 UTC"))
                   (:div :id "timewarp-buttons"
-                        "[||] [>] [>>] [>>>] [>>>>]")))
+                        (loop for entry in *timewarp-modes-alist* do
+                             (:span "["
+                                    (:a :id (format nil "btn-timewarp-~(~A~)" (car entry))
+                                        :href "#"
+                                        :onclick (ps-inline (select-timewarp (lisp (car entry))))
+                                        (cadr entry))
+                                    "] "))
+                        )))
 
       (:div :id "stuffz"
             "TODO")
